@@ -3,7 +3,7 @@ import string
 import random
 import numpy as np
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 
 #generates the sequence of some input length with delimiter as space
@@ -40,8 +40,8 @@ def brute_force_search(filename1,filename2):
 def dot_plot(filename1,filename2):
     str1 = pd.read_csv(filename1, delimiter = " " , header = None)
     str2 = pd.read_csv(filename2, delimiter = " " , header = None)
-    str1=str1.iloc[0]# now the data can be accesed by putting index after seq1 such as seq1[i]
-    str2=str2.iloc[0]#now the data can be accesed by putting index after seq2 such as seq2[i]
+    str1=str1.iloc[0][0]# now the data can be accesed by putting index after seq1 such as seq1[i]
+    str2=str2.iloc[0][0]#now the data can be accesed by putting index after seq2 such as seq2[i]
 
     D = np.zeros((len(str1),(len(str2))))
     for i in range(0,len(str1)):
@@ -398,24 +398,36 @@ def hybrid(filename1,filename2,chunks):
 
 
 
-#dna_seq_generator(100000,"seq1.txt")
-#dna_seq_generator(100000,"seq2.txt")
-
-#===========================================================================================================#
-#print(brute_force_search("seq1.txt","seq2.txt"))
-#print("Brute force done\n")
-#kmp("seq1.txt","seq2.txt")
-#print("kmp done \n")
+#dna_seq_generator(10000,"rbf1.txt")
+#dna_seq_generator(10000,"rbf2.txt")
 #print(get_string_alignment("ATAGCTATAGCAT","ACCTACGGATCGT"))
-print(get_string_alignment_filename("ht1.txt","ht2.txt"))
-hybrid("ht1.txt","ht2.txt",20)
-#print(split_str("ATACGTGACGTGACGATAAACGATGACGGATACGATGACAGTACCCAGATCAGATACCCGATGAACGTGTGACGGATCVGTA", 8))
+#===========================================================================================================#
+# print("R:Starting Brute force\n")
+# print(brute_force_search("rbf1.txt","rbf2.txt"))
+# print("R:Brute force done\n")
+# print("R:starting kmp\n")
+# kmp("rbf1.txt","rbf2.txt")
+# print("R:kmp done \n")
+# print("R:starting hybrid\n")
+# hybrid("rht1.txt","rht2.txt",1000)
+# print("R:hybrid done\n")
+# print("R:starting Needleman wunch\n")
+# print(get_string_alignment_filename("rht1.txt","rht2.txt"))
+# print("R:Needleman wunch done\n")
 
-
-# #splitting the sequence
-# seq = pd.read_csv("ht1.txt",delimiter=" ",header=None)
-# seq = seq.iloc[0]
-# seq =np.array(seq)
-# seq=''.join(seq)
-# print(split_str(seq,20))
-
+#====================================Running the needleman wunch on actual virus DNA==================#
+seq1 = pd.read_csv("ebola1.txt", delimiter = " " , header = None)
+seq2 = pd.read_csv("ebola2.txt", delimiter = " " , header = None)
+seq1=seq1.iloc[0]# now the data can be accesed by putting index after seq1 such as seq1[i]
+seq2=seq2.iloc[0]#now the data can be accesed by putting index after seq2 such as seq2[i]
+seq1 =list(seq1)
+seq2 =list(seq2)
+print(len(seq1[0]))
+print(len(seq2[0]))
+# print("A:starting hybrid\n")
+hybrid("ebola1.txt","ebola2.txt",100)
+# print("A:hybrid done\n")
+# print("A: starting needleman wunch\n")
+# get_string_alignment(seq1[0],seq2[0])
+# print("A: needleman wunch done")
+dot_plot("protein1.txt","protein2.txt")
